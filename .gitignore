@@ -1,0 +1,15 @@
+# LaTeX files
+**/*.bbl
+**/*.blg
+**/*.brf
+**/*.aux
+**/*.fdb_latexmk
+**/*.fls
+**/*.out
+**/*.synctex.gz
+**/*.log
+**/*.pdf
+
+**/.DS_Store/
+.vscode
+.idea

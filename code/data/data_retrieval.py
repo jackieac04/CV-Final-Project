@@ -11,25 +11,32 @@ while(True):
     img_np = np.array(img) #convert image to numpy array
     frame = cv2.cvtColor(img_np, cv2.COLOR_BGR2GRAY) #convert to grayscale
     all_frames = np.append(all_frames, frame) #append to all_frames
+    
     cv2.imshow("frame", frame) #display frame
 
+    keyboard_values = np.array([])
+
+    #TODO: ensure there's a keyboard value for each frame
     #recording keyboard info
     event = keyboard.read_event()
     if event.event_type == "down":
         if event.name == "left":
-            print("Left arrow pressed")
+            keyboard_values = np.append(keyboard_values, "left")
+            print(keyboard_values)
         elif event.name == "right":
-            print("Right arrow pressed")
+            keyboard_values = np.append(keyboard_values, "right")
+            print(keyboard_values)
         elif event.name == "esc":
             break
+        else:
+            keyboard_values = np.append(keyboard_values, "none")
 
     #break loop on escape
     key = cv2.waitKey(1) 
-    if key != -1:
-        print(key)
     if key == 27: #if escape key is pressed
         break
 
 cv2.destroyAllWindows()
 print(all_frames)
 print(all_frames.shape)
+print(keyboard_values.shape)

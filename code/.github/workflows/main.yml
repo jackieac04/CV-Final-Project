@@ -1,0 +1,41 @@
+# This is a basic workflow to help you get started with Actions
+
+name: pdfLaTeX compile the homework questions
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  #pull_request:
+  #  branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # Only compiles PDFs for updates in the main template repository (not student repositories)
+    if: >-
+      github.event.repository.html_url == 'https://github.com/BrownCSCI1430/Homework5_CNNs_Template'
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      # Compile .tex file with https://github.com/dante-ev/latex-action
+      - name: LaTeX compilation
+        uses: dante-ev/latex-action@2021-A
+        with:
+          root_file: Homework5_Questions_Template.tex
+          working_directory: questions # optional
+          compiler: latexmk # optional, default is latexmk
+          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode # optional, default is -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode
+      - name: Commit and Push PDF
+        run: |
+          git add questions/Homework5_Questions_Template.pdf
+          git config --local user.name 'github-actions-bot'
+          git config --local user.email 'cs1430-github-actions[bot]@users.noreply.github.com'
+          git commit -m "Compile written PDF"
+          git push

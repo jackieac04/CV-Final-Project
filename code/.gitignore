@@ -1,0 +1,26 @@
+**/.DS_Store/
+.vscode
+.idea
+
+venv
+results/*
+
+# LaTeX files
+*.synctex.gz
+*.out
+*.log
+*.fls
+*.fdb_latexmk
+*.aux
+
+**/__MACOSX/
+
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+code/logs/*
+code/checkpoints/*
+code/misclassified/*

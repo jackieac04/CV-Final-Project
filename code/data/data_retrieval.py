@@ -15,7 +15,7 @@ last_key_time = time.time()  # Initialize the last key press time
 
 while(True):
     #getting frame
-    img = ImageGrab.grab(bbox=(100, 10, 600, 300)) #x, y, width, height
+    img = ImageGrab.grab() #x, y, width, height
     img_np = np.array(img) #convert image to numpy array
     frame = cv2.cvtColor(img_np, cv2.COLOR_BGR2GRAY) #convert to grayscale
 

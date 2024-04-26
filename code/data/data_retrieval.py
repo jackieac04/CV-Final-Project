@@ -7,9 +7,9 @@ import time
 
 all_frames = np.array([])
 
-left_count = 748
-none_count = 458
-right_count = 487
+left_count = 783
+none_count = 481
+right_count = 513
 
 
 last_key_time = time.time()  # Initialize the last key press time

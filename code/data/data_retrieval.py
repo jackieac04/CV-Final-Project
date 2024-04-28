@@ -20,7 +20,8 @@ while(True):
     img_np = np.array(img) #convert image to numpy array
     frame = cv2.cvtColor(img_np, cv2.COLOR_BGR2GRAY) #convert to grayscale
 
-    directory = r"C:/Users/prana/OneDrive/Documents/GitHub/CV-Final-Project/code/data/train"
+    directory = r"C:/Users/annawang/Desktop/CS1430_Projects/CV-Final-Project/code/data/train"
+    # directory = r"C:/Users/prana/OneDrive/Documents/GitHub/CV-Final-Project/code/data/train"
     # directory = r"C:/Users\smerc/OneDrive/Desktop/Sophomore Year/CS1430_Projects/CV-Final-Project/code\data/train"
     os.chdir(directory)
 

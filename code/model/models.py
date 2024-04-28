@@ -5,6 +5,7 @@ Brown University
 """
 
 import tensorflow as tf
+import keras.optimizers
 from keras.layers import \
     Conv2D, MaxPool2D, Dropout, Flatten, Dense
 
@@ -13,9 +14,11 @@ import hyperparameters as hp
 class VGGModel(tf.keras.Model):
     def __init__(self):
         super(VGGModel, self).__init__()
+        self.flatten = Flatten()
 
-        self.optimizer = tf.keras.optimizers.Adam(
-            learning_rate=hp.learning_rate)
+        self.optimizer = keras.optimizers.Adam(
+              learning_rate=hp.learning_rate,
+        )
 
         # Don't change the below:
 
@@ -59,13 +62,12 @@ class VGGModel(tf.keras.Model):
         ]
 
     
-        for layer in self.vgg16.layers:
+        for layer in self.vgg16:
             layer.trainable = False
 
         # TODO: Write a classification head for our 15-scene classification task.
 
-        self.head = [Dropout(0.2),
-                     Flatten(),
+        self.head = [Flatten(),
                      Dense(128, activation='relu'),
                      Dropout(0.2),  # drops 20% of neurons
                      Dense(64, activation='relu'),
@@ -80,6 +82,9 @@ class VGGModel(tf.keras.Model):
         """ Passes the image through the network. """
 
         x = self.vgg16(x)
+        print("Shape after VGG16 layers:", x.shape) 
+        x = self.flatten(x)
+        print("Shape after Flatten layer:", x.shape) 
         x = self.head(x)
 
         return x

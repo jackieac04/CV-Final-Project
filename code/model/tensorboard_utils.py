@@ -50,7 +50,7 @@ class ImageLabelingLogger(tf.keras.callbacks.Callback):
         fig = plt.figure(figsize=(9, 9))
         count_all = 0
         count_misclassified = 0
-        
+
         for batch in self.datasets.test_data:
             misclassified = []
             correct_labels = []
@@ -63,20 +63,16 @@ class ImageLabelingLogger(tf.keras.callbacks.Callback):
                 probabilities = self.model(np.array([image])).numpy()[0]
                 predict_class_idx = np.argmax(probabilities)
 
-                if self.task == '1':
-                    image = np.clip(image, 0., 1.)
-                    plt.imshow(image, cmap='gray')
-                else:
-                    # Undo VGG preprocessing
-                    mean = [103.939, 116.779, 123.68]
-                    image[..., 0] += mean[0]
-                    image[..., 1] += mean[1]
-                    image[..., 2] += mean[2]
-                    image = image[:, :, ::-1]
-                    image = image / 255.
-                    image = np.clip(image, 0., 1.)
+                # Undo VGG preprocessing
+                mean = [103.939, 116.779, 123.68]
+                image[..., 0] += mean[0]
+                image[..., 1] += mean[1]
+                image[..., 2] += mean[2]
+                image = image[:, :, ::-1]
+                image = image / 255.
+                image = np.clip(image, 0., 1.)
 
-                    plt.imshow(image)
+                plt.imshow(image)
 
                 is_correct = correct_class_idx == predict_class_idx
 
@@ -86,7 +82,7 @@ class ImageLabelingLogger(tf.keras.callbacks.Callback):
                     self.datasets.idx_to_class[predict_class_idx],
                     color=title_color)
                 plt.axis('off')
-                
+
                 # output individual images with wrong labels
                 if not is_correct:
                     count_misclassified += 1
@@ -95,7 +91,7 @@ class ImageLabelingLogger(tf.keras.callbacks.Callback):
                     wrong_labels.append(predict_class_idx)
 
                 count_all += 1
-                
+
                 # ensure there are >= 2 misclassified images
                 if count_all >= 25 and count_misclassified >= 2:
                     break
@@ -108,24 +104,27 @@ class ImageLabelingLogger(tf.keras.callbacks.Callback):
         file_writer_il = tf.summary.create_file_writer(
             self.logs_path + os.sep + "image_labels")
 
-        misclassified_path = "misclassified" + self.logs_path[self.logs_path.index(os.sep):]
+        misclassified_path = "misclassified" + \
+            self.logs_path[self.logs_path.index(os.sep):]
         if not os.path.exists(misclassified_path):
             os.makedirs(misclassified_path)
         for correct, wrong, img in zip(correct_labels, wrong_labels, misclassified):
             wrong = self.datasets.idx_to_class[wrong]
-            correct= self.datasets.idx_to_class[correct]
+            correct = self.datasets.idx_to_class[correct]
             image_name = wrong + "_predicted" + ".png"
             if not os.path.exists(misclassified_path + os.sep + correct):
                 os.makedirs(misclassified_path + os.sep + correct)
-            plt.imsave(misclassified_path + os.sep + correct + os.sep + image_name, img)
+            plt.imsave(misclassified_path + os.sep +
+                       correct + os.sep + image_name, img)
 
         with file_writer_il.as_default():
             tf.summary.image("0 Example Set of Image Label Predictions (blue is correct; red is incorrect)",
                              figure_img, step=epoch_num)
             for label, wrong, img in zip(correct_labels, wrong_labels, misclassified):
                 img = tf.expand_dims(img, axis=0)
-                tf.summary.image("1 Example @ epoch " + str(epoch_num) + ": " + self.datasets.idx_to_class[label] + " misclassified as " + self.datasets.idx_to_class[wrong], 
+                tf.summary.image("1 Example @ epoch " + str(epoch_num) + ": " + self.datasets.idx_to_class[label] + " misclassified as " + self.datasets.idx_to_class[wrong],
                                  img, step=epoch_num)
+
 
 class ConfusionMatrixLogger(tf.keras.callbacks.Callback):
     """ Keras callback for logging a confusion matrix for viewing
@@ -224,19 +223,12 @@ class CustomModelSaver(tf.keras.callbacks.Callback):
             save_name = "weights.e{0:03d}-acc{1:.4f}.h5".format(
                 epoch, cur_acc)
 
-            if self.task == '1':
-                save_location = self.checkpoint_dir + os.sep + "your." + save_name
-                print(("\nEpoch {0:03d} TEST accuracy ({1:.4f}) EXCEEDED previous "
-                       "maximum TEST accuracy.\nSaving checkpoint at {location}")
-                       .format(epoch + 1, cur_acc, location = save_location))
-                self.model.save_weights(save_location)
-            else:
-                save_location = self.checkpoint_dir + os.sep + "vgg." + save_name
-                print(("\nEpoch {0:03d} TEST accuracy ({1:.4f}) EXCEEDED previous "
-                       "maximum TEST accuracy.\nSaving checkpoint at {location}")
-                       .format(epoch + 1, cur_acc, location = save_location))
-                # Only save weights of classification head of VGGModel
-                self.model.head.save_weights(save_location)
+            save_location = self.checkpoint_dir + os.sep + "vgg." + save_name
+            print(("\nEpoch {0:03d} TEST accuracy ({1:.4f}) EXCEEDED previous "
+                   "maximum TEST accuracy.\nSaving checkpoint at {location}")
+                  .format(epoch + 1, cur_acc, location=save_location))
+            # Only save weights of classification head of VGGModel
+            self.model.head.save_weights(save_location)
 
             # Ensure max_num_weights is not exceeded by removing
             # minimum weight
@@ -247,7 +239,6 @@ class CustomModelSaver(tf.keras.callbacks.Callback):
             print(("\nEpoch {0:03d} TEST accuracy ({1:.4f}) DID NOT EXCEED "
                    "previous maximum TEST accuracy.\nNo checkpoint was "
                    "saved").format(epoch + 1, cur_acc))
-
 
     def scan_weight_files(self):
         """ Scans checkpoint directory to find current minimum and maximum

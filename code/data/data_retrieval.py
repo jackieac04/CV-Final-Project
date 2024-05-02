@@ -7,9 +7,9 @@ import time
 
 all_frames = np.array([])
 
-left_count = 1017
-none_count = 583
-right_count = 691
+left_count = 1279
+none_count = 931
+right_count = 842
 
 
 last_key_time = time.time()  # Initialize the last key press time
@@ -20,9 +20,9 @@ while(True):
     img_np = np.array(img) #convert image to numpy array
     frame = cv2.cvtColor(img_np, cv2.COLOR_BGR2GRAY) #convert to grayscale
 
-    directory = r"C:/Users/annawang/Desktop/CS1430_Projects/CV-Final-Project/code/data/train"
+    # directory = r"C:/Users/annawang/Desktop/CS1430_Projects/CV-Final-Project/code/data/train"
     # directory = r"C:/Users/prana/OneDrive/Documents/GitHub/CV-Final-Project/code/data/train"
-    # directory = r"C:/Users\smerc/OneDrive/Desktop/Sophomore Year/CS1430_Projects/CV-Final-Project/code\data/train"
+    directory = r"C:/Users\smerc/OneDrive/Desktop/Sophomore Year/CS1430_Projects/CV-Final-Project/code\data/train"
     os.chdir(directory)
 
     #recording keyboard info

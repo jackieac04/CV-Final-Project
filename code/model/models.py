@@ -14,7 +14,6 @@ import hyperparameters as hp
 class VGGModel(tf.keras.Model):
     def __init__(self):
         super(VGGModel, self).__init__()
-        self.flatten = Flatten()
 
         self.optimizer = keras.optimizers.Adam(
               learning_rate=hp.learning_rate,
@@ -82,9 +81,6 @@ class VGGModel(tf.keras.Model):
         """ Passes the image through the network. """
 
         x = self.vgg16(x)
-        print("Shape after VGG16 layers:", x.shape) 
-        x = self.flatten(x)
-        print("Shape after Flatten layer:", x.shape) 
         x = self.head(x)
 
         return x
@@ -92,5 +88,5 @@ class VGGModel(tf.keras.Model):
     @staticmethod
     def loss_fn(labels, predictions):
         """ Loss function for model. """
-        loss = tf.keras.losses.SparseCategoricalCrossentropy()(labels, predictions)
+        loss = keras.losses.SparseCategoricalCrossentropy()(labels, predictions)
         return loss

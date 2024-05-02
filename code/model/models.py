@@ -66,12 +66,17 @@ class VGGModel(tf.keras.Model):
 
         # TODO: Write a classification head for our 15-scene classification task.
 
-        self.head = [Flatten(),
-                     Dense(128, activation='relu'),
-                     Dropout(0.2),  # drops 20% of neurons
-                     Dense(64, activation='relu'),
-                     Dropout(0.2),  # drops 20% of neurons
-                     Dense(15, activation="softmax")]
+        self.head = [
+                     Flatten(),
+                     Dense(128, activation="relu"),
+                     Dense(15, activation='softmax')
+                     # Flatten(),
+                     # Dense(128, activation='relu'),
+                     # Dropout(0.2),  # drops 20% of neurons
+                     # Dense(64, activation='relu'),
+                     # Dropout(0.2),  # drops 20% of neurons
+                     # Dense(15, activation="softmax")
+                     ]
 
         # Don't change the below:
         self.vgg16 = tf.keras.Sequential(self.vgg16, name="vgg_base")

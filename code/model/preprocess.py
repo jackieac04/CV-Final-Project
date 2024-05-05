@@ -32,8 +32,8 @@ class Datasets():
         self.classes = [""] * hp.num_classes
 
         # Mean and std for standardization
-        self.mean = np.zeros((224, 126, 3))
-        self.std = np.ones((224, 126, 3))
+        self.mean = np.zeros((224, 224, 3))
+        self.std = np.ones((224, 224, 3))
         self.calc_mean_and_std()
 
         # Setup data generators
@@ -67,12 +67,12 @@ class Datasets():
 
         # Allocate space in memory for images
         data_sample = np.zeros(
-            (hp.preprocess_sample_size, 224, 126, 3))
+            (hp.preprocess_sample_size, 224, 224, 3))
 
         # Import images
         for i, file_path in enumerate(file_list):
             img = Image.open(file_path)
-            img = img.resize((224, 126))
+            img = img.resize((224, 224))
             img = np.array(img, dtype=np.float32)
             img /= 255.
 
@@ -165,8 +165,8 @@ class Datasets():
             data_gen = tf.keras.preprocessing.image.ImageDataGenerator(
                 preprocessing_function=self.preprocess_fn)
 
-        # VGG must take images of size 224x126
-        img_size_w, img_size_h = 224, 126
+        # VGG must take images of size 224x224
+        img_size_w, img_size_h = 224, 224
 
         classes_for_flow = None
 

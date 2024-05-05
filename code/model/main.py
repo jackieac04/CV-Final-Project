@@ -218,7 +218,7 @@ def main():
         "vgg_model" + os.sep + timestamp + os.sep
     logs_path = "logs" + os.sep + "vgg_model" + \
         os.sep + timestamp + os.sep
-    model(tf.keras.Input(shape=(224, 126, 3)))
+    model(tf.keras.Input(shape=(224, 224, 3)))
 
     # Print summ aries for both parts of the model
     model.vgg16.summary()

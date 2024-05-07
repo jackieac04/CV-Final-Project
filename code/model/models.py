@@ -72,7 +72,7 @@ class VGGModel(tf.keras.Model):
                      Dropout(0.2),  # drops 20% of neurons
                      Dense(64, activation='relu'),
                      Dropout(0.2),  # drops 20% of neurons
-                     Dense(3, activation="softmax")
+                     Dense(15, activation="softmax")
                      ]
 
         # Don't change the below:

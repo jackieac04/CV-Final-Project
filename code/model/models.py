@@ -69,7 +69,7 @@ class VGGModel(tf.keras.Model):
         self.head = [
                      Flatten(),
                      Dense(128, activation="relu"),
-                     Dense(15, activation='softmax')
+                     Dense(3, activation='softmax')
                      # Flatten(),
                      # Dense(128, activation='relu'),
                      # Dropout(0.2),  # drops 20% of neurons

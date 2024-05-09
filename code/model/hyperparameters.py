@@ -28,7 +28,7 @@ Sample size for calculating the mean and standard deviation of the
 training data. This many images will be randomly seleted to be read
 into memory temporarily.
 """
-preprocess_sample_size = 200
+preprocess_sample_size = 300
 
 """
 Maximum number of weight files to save to checkpoint directory. If

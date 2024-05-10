@@ -66,12 +66,14 @@ class VGGModel(tf.keras.Model):
 
         # TODO: Write a classification head for our 15-scene classification task.
 
-        self.head = [
-                     tf.keras.layers.Flatten(),
-                     tf.keras.layers.Dense(512, activation='relu'),
-                     tf.keras.layers.Dropout(0.5),
-                     tf.keras.layers.Dense(3, activation='softmax')  # Assuming 15 output
-                     ]
+        self.head = self.head = [
+              tf.keras.layers.Flatten(),
+              tf.keras.layers.Dense(256, activation='relu'),  
+              tf.keras.layers.Dropout(0.3),                   
+              tf.keras.layers.Dense(128, activation='relu'),  # Another hidden layer
+              tf.keras.layers.Dropout(0.3),                   
+              tf.keras.layers.Dense(3, activation='softmax')
+       ]
 
         # Don't change the below:
         self.vgg16 = tf.keras.Sequential(self.vgg16, name="vgg_base")

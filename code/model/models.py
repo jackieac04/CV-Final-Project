@@ -24,7 +24,7 @@ class VGGModel(tf.keras.Model):
         self.vgg16 = [
               # Block 1
               Conv2D(64, 3, 1, padding="same", activation="relu", name="block1_conv1"),
-              Conv2D(32, 3, 1, padding="same", activation="relu", name="block1_conv2"),
+              Conv2D(64, 3, 1, padding="same", activation="relu", name="block1_conv2"),
               MaxPool2D(2, name="block1_pool"),
               # Block 2
               Conv2D(64, 3, 1, padding="same", activation="relu", name="block2_conv1"),
@@ -40,11 +40,11 @@ class VGGModel(tf.keras.Model):
               Conv2D(256, 3, 1, padding="same", activation="relu", name="block4_conv2"),
               Conv2D(256, 3, 1, padding="same", activation="relu", name="block4_conv3"),
               MaxPool2D(2, name="block4_pool"),
-              # Block 5
-              Conv2D(512, 3, 1, padding="same", activation="relu", name="block5_conv1"),
-              Conv2D(512, 3, 1, padding="same", activation="relu", name="block5_conv2"),
-              Conv2D(512, 3, 1, padding="same", activation="relu", name="block5_conv3"),
-              MaxPool2D(2, name="block5_pool"),
+              # # Block 5
+              # Conv2D(512, 3, 1, padding="same", activation="relu", name="block5_conv1"),
+              # Conv2D(512, 3, 1, padding="same", activation="relu", name="block5_conv2"),
+              # Conv2D(512, 3, 1, padding="same", activation="relu", name="block5_conv3"),
+              # MaxPool2D(2, name="block5_pool"),
        ]
 
 

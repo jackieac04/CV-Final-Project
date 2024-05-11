@@ -70,7 +70,7 @@ class VGGModel(tf.keras.Model):
                      tf.keras.layers.Flatten(),
                      tf.keras.layers.Dense(512, activation='relu'),
                      tf.keras.layers.Dropout(0.5),
-                     tf.keras.layers.Dense(3, activation='softmax')  # Assuming 15 output
+                     tf.keras.layers.Dense(3, activation='softmax')
                      ]
 
         # Don't change the below:

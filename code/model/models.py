@@ -21,7 +21,7 @@ class VGGModel(tf.keras.Model):
 
         # Don't change the below:
 
-        self.vgg16_modified = [
+        self.vgg16 = [
               # Block 1
               Conv2D(32, 3, 1, padding="same", activation="relu", name="block1_conv1"),
               Conv2D(32, 3, 1, padding="same", activation="relu", name="block1_conv2"),

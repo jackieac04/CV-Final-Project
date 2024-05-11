@@ -24,17 +24,11 @@ Momentum on the gradient (if you use a momentum-based optimizer)
 momentum = 0.01
 
 """
-Resize image size for task 1. Task 3 must have an image size of 224,
-so that is hard-coded elsewhere.
-"""
-img_size = 224
-
-"""
 Sample size for calculating the mean and standard deviation of the
 training data. This many images will be randomly seleted to be read
 into memory temporarily.
 """
-preprocess_sample_size = 400
+preprocess_sample_size = 192
 
 """
 Maximum number of weight files to save to checkpoint directory. If
@@ -47,9 +41,9 @@ max_num_weights = 5
 Defines the number of training examples per batch.
 You don't need to modify this.
 """
-batch_size = 10
+batch_size = 20
 
 """
 The number of image scene classes. Don't change this.
 """
-num_classes = 15
+num_classes = 3

@@ -5,6 +5,7 @@ Brown University
 """
 
 import tensorflow as tf
+import keras.optimizers
 from keras.layers import \
     Conv2D, MaxPool2D, Dropout, Flatten, Dense
 
@@ -14,8 +15,9 @@ class VGGModel(tf.keras.Model):
     def __init__(self):
         super(VGGModel, self).__init__()
 
-        self.optimizer = tf.keras.optimizers.Adam(
-            learning_rate=hp.learning_rate)
+        self.optimizer = keras.optimizers.Adam(
+              learning_rate=hp.learning_rate,
+        )
 
         # Don't change the below:
 
@@ -59,18 +61,17 @@ class VGGModel(tf.keras.Model):
         ]
 
     
-        for layer in self.vgg16.layers:
+        for layer in self.vgg16:
             layer.trainable = False
 
         # TODO: Write a classification head for our 15-scene classification task.
 
-        self.head = [Dropout(0.2),
-                     Flatten(),
-                     Dense(128, activation='relu'),
-                     Dropout(0.2),  # drops 20% of neurons
-                     Dense(64, activation='relu'),
-                     Dropout(0.2),  # drops 20% of neurons
-                     Dense(15, activation="softmax")]
+        self.head = [
+                     tf.keras.layers.Flatten(),
+                     tf.keras.layers.Dense(512, activation='relu'),
+                     tf.keras.layers.Dropout(0.5),
+                     tf.keras.layers.Dense(3, activation='softmax')
+                     ]
 
         # Don't change the below:
         self.vgg16 = tf.keras.Sequential(self.vgg16, name="vgg_base")
@@ -87,5 +88,5 @@ class VGGModel(tf.keras.Model):
     @staticmethod
     def loss_fn(labels, predictions):
         """ Loss function for model. """
-        loss = tf.keras.losses.SparseCategoricalCrossentropy()(labels, predictions)
+        loss = keras.losses.SparseCategoricalCrossentropy()(labels, predictions)
         return loss

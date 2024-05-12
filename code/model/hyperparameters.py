@@ -41,7 +41,7 @@ max_num_weights = 5
 Defines the number of training examples per batch.
 You don't need to modify this.
 """
-batch_size = 32
+batch_size = 8
 
 """
 The number of image scene classes. Don't change this.

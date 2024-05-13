@@ -157,8 +157,8 @@ class Datasets():
         if augment:
              data_gen = tf.keras.preprocessing.image.ImageDataGenerator(
                 preprocessing_function=self.preprocess_fn,
-                width_shift_range=0.1,        # Random horizontal crop by 10% of the width
-                height_shift_range=0.1,       # Random vertical crop by 10% of the height
+                # width_shift_range=0.1,        # Random horizontal crop by 10% of the width
+                # height_shift_range=0.1,       # Random vertical crop by 10% of the height
                 # rotation_range=10,            # Random rotation in the range [-10, 10] degrees
                 # zoom_range=0.1,               # Random scaling/zoom between [0.9, 1.1]
                 # brightness_range=[0.8, 1.2],  # Random brightness adjustment

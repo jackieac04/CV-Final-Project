@@ -163,7 +163,7 @@ class Datasets():
                 # zoom_range=0.1,               # Random scaling/zoom between [0.9, 1.1]
                 # brightness_range=[0.8, 1.2],  # Random brightness adjustment
                 # shear_range=0.1,              # Shear intensity (angle in radians)
-                 fill_mode='nearest'           # Fill mode for points outside the input boundaries
+                # fill_mode='nearest'           # Fill mode for points outside the input boundaries
             )
 
             # ============================================================
